@@ -15,9 +15,9 @@ class HandDetector:
         self.FONT_THICKNESS = 1
         self.HANDEDNESS_TEXT_COLOR = (88, 205, 54)  # vibrant green
 
-        self.createLandmarker()
+        self.create_landmarker()
 
-    def createLandmarker(self):
+    def create_landmarker(self):
         options = mp.tasks.vision.HandLandmarkerOptions(
             base_options=mp.tasks.BaseOptions(
                 model_asset_path="../mp-models/hand_landmarker.task"
@@ -32,8 +32,10 @@ class HandDetector:
         self.landmarker = self.landmarker.create_from_options(options)
 
     def detect_hands(self, image):
-        mpImage = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-        self.result = self.landmarker.detect_for_video(mpImage, int(time.time() * 1000))
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+        self.result = self.landmarker.detect_for_video(
+            mp_image, int(time.time() * 1000)
+        )
 
     def draw_landmarks_on_image(self, rgb_image, detection_result):
         hand_landmarks_list = detection_result.hand_landmarks

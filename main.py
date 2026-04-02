@@ -9,21 +9,21 @@ from HandDetector import HandDetector
 
 def main():
     cap = cv2.VideoCapture(0)
-    handLandmarker = HandDetector(min_num_hands=2)
+    hand_landmarker = HandDetector(min_num_hands=2)
 
     while True:
-        success, img = cap.read()
+        _, img = cap.read()
 
-        handLandmarker.detect_hands(img)
-        annoted_image = handLandmarker.draw_landmarks_on_image(
-            img, handLandmarker.result
+        hand_landmarker.detect_hands(img)
+        annotated_image = hand_landmarker.draw_landmarks_on_image(
+            img, hand_landmarker.result
         )
 
-        cv2.imshow("Image", annoted_image)
+        cv2.imshow("Image", annotated_image)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
-    handLandmarker.close()
+    hand_landmarker.close()
     cap.release()
     cv2.destroyAllWindows()
 
