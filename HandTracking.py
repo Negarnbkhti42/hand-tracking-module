@@ -57,30 +57,37 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return annotated_image
 
 
-cap = cv2.VideoCapture(0)
+def main():
+    cap = cv2.VideoCapture(0)
 
-BaseOptions = mp.tasks.BaseOptions
-HandLandmarker = mp.tasks.vision.HandLandmarker
-HandLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
-VisionRunningMode = mp.tasks.vision.RunningMode
+    baseOptions = mp.tasks.BaseOptions
+    handLandmarker = mp.tasks.vision.HandLandmarker
+    handLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
+    visionRunningMode = mp.tasks.vision.RunningMode
 
-options = HandLandmarkerOptions(
-    base_options=BaseOptions(model_asset_path="../mp-models/hand_landmarker.task"),
-    running_mode=VisionRunningMode.VIDEO,
-)
+    options = handLandmarkerOptions(
+        base_options=baseOptions(model_asset_path="../mp-models/hand_landmarker.task"),
+        running_mode=visionRunningMode.VIDEO,
+    )
 
-with HandLandmarker.create_from_options(options) as landmarker:
-    while True:
-        success, img = cap.read()
+    with handLandmarker.create_from_options(options) as landmarker:
+        while True:
+            success, img = cap.read()
 
-        mpImage = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
-        landmarkerResult = landmarker.detect_for_video(mpImage, int(time.time() * 1000))
+            mpImage = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
+            landmarkerResult = landmarker.detect_for_video(
+                mpImage, int(time.time() * 1000)
+            )
 
-        annoted_image = draw_landmarks_on_image(img, landmarkerResult)
+            annoted_image = draw_landmarks_on_image(img, landmarkerResult)
 
-        cv2.imshow("Image", annoted_image)
-        if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+            cv2.imshow("Image", annoted_image)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
 
-cap.release()
-cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    main()
