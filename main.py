@@ -9,7 +9,7 @@ from HandDetector import HandDetector
 
 def main():
     cap = cv2.VideoCapture(0)
-    handLandmarker = HandDetector()
+    handLandmarker = HandDetector(min_num_hands=2)
 
     while True:
         success, img = cap.read()
