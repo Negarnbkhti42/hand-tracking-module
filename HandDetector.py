@@ -18,14 +18,6 @@ class HandDetector:
         self.createLandmarker()
 
     def createLandmarker(self):
-        # callback function
-        def update_result(
-            result: mp.tasks.vision.HandLandmarkerResult,
-            output_image: mp.Image,
-            timestamp_ms: int,
-        ):
-            self.result = result
-
         options = mp.tasks.vision.HandLandmarkerOptions(
             base_options=mp.tasks.BaseOptions(
                 model_asset_path="../mp-models/hand_landmarker.task"
