@@ -20,7 +20,7 @@ class HandDetector:
     def create_landmarker(self):
         options = mp.tasks.vision.HandLandmarkerOptions(
             base_options=mp.tasks.BaseOptions(
-                model_asset_path="../mp-models/hand_landmarker.task"
+                model_asset_path="./hand_landmarker.task"
             ),  # path to model
             running_mode=mp.tasks.vision.RunningMode.VIDEO,  # running on a live stream
             num_hands=self.min_num_hands,  # track both hands
